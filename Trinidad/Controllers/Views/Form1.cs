@@ -45,7 +45,7 @@ namespace Trinidad.Controllers.Views
                 item.SubItems.Add(program.Start.ToShortTimeString());
                 item.SubItems.Add(program.Channel);
             }
-            listView1.AutoResizeColumns( ColumnHeaderAutoResizeStyle.ColumnContent);
+            listView1.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
         }
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -89,16 +89,17 @@ namespace Trinidad.Controllers.Views
       
         private void btnStart_Click(object sender, EventArgs e)
         {
-            timer1.Start();
+            Scrobble(DateTime.Parse(tbDateTime.Text));
             btnStop.Enabled = timer1.Enabled;
             btnStart.Enabled = !timer1.Enabled;
         }
-        Program currentProgram = null;
+        Models.Program currentProgram = null;
         private void Scrobble(DateTime time)
         {
             foreach (Models.Program program in currentPlaylist.Programs)
             {
                 TimeSpan subtract = time.Subtract(program.Start);
+
                 if (subtract.TotalSeconds <= 60 && subtract.TotalSeconds > 0)
                 {
 
@@ -108,6 +109,18 @@ namespace Trinidad.Controllers.Views
                         axWindowsMediaPlayer1.URL = cbURL.Text;
                         axWindowsMediaPlayer1.Ctlcontrols.play();
                     }
+                }
+                // Check if program has ended, then resume the playback
+                if (currentProgram != null)
+                {
+                    TimeSpan minutesLeft = currentProgram.End.Subtract(DateTime.Now);
+                    if (minutesLeft.TotalMinutes <= 0)
+                    {
+                        // Stop and go back
+                        axWindowsMediaPlayer1.Ctlcontrols.stop();
+                        Player.Play();
+                    }
+                    
                 }
                 
             }

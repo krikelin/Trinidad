@@ -16,6 +16,8 @@ namespace Trinidad.Models
     {
         private const string DateTimeOffsetFormatString = "yyyy-MM-ddTHH:mm:sszzz";
         public DateTime Start;
+        [XmlAttribute("recurring")]
+        public bool Recurring;
         [XmlElement("time")]
         public String Time
         {
@@ -26,6 +28,15 @@ namespace Trinidad.Models
             set
             {
                 Start = DateTime.Parse(value);
+                if(Recurring)
+                    Start.AddHours(DateTime.Now.Subtract(Start).TotalHours);
+            }
+        }
+        public DateTime End
+        {
+            get
+            {
+                return Start.AddMinutes(Duration);
             }
         }
         [XmlElement("duration")]
@@ -34,6 +45,8 @@ namespace Trinidad.Models
         public String Channel;
         [XmlElement("title")]
         public String Title;
+
+       
         public Program()
         {
         }
