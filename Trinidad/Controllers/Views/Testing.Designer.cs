@@ -34,10 +34,10 @@
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.cbURL = new System.Windows.Forms.ComboBox();
+            this.radioButton2 = new System.Windows.Forms.RadioButton();
             this.radioButton1 = new System.Windows.Forms.RadioButton();
             this.listView1 = new System.Windows.Forms.ListView();
-            this.radioButton2 = new System.Windows.Forms.RadioButton();
-            this.cbURL = new System.Windows.Forms.ComboBox();
             this.btnStop = new System.Windows.Forms.Button();
             this.btnStart = new System.Windows.Forms.Button();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
@@ -92,6 +92,26 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "groupBox1";
             // 
+            // cbURL
+            // 
+            this.cbURL.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.cbURL.FormattingEnabled = true;
+            this.cbURL.Location = new System.Drawing.Point(6, 63);
+            this.cbURL.Name = "cbURL";
+            this.cbURL.Size = new System.Drawing.Size(618, 21);
+            this.cbURL.TabIndex = 8;
+            // 
+            // radioButton2
+            // 
+            this.radioButton2.AutoSize = true;
+            this.radioButton2.Location = new System.Drawing.Point(6, 102);
+            this.radioButton2.Name = "radioButton2";
+            this.radioButton2.Size = new System.Drawing.Size(97, 17);
+            this.radioButton2.TabIndex = 7;
+            this.radioButton2.Text = "Play this queue";
+            this.radioButton2.UseVisualStyleBackColor = true;
+            // 
             // radioButton1
             // 
             this.radioButton1.AutoSize = true;
@@ -116,26 +136,6 @@
             this.listView1.Size = new System.Drawing.Size(618, 162);
             this.listView1.TabIndex = 6;
             this.listView1.UseCompatibleStateImageBehavior = false;
-            // 
-            // radioButton2
-            // 
-            this.radioButton2.AutoSize = true;
-            this.radioButton2.Location = new System.Drawing.Point(6, 102);
-            this.radioButton2.Name = "radioButton2";
-            this.radioButton2.Size = new System.Drawing.Size(97, 17);
-            this.radioButton2.TabIndex = 7;
-            this.radioButton2.Text = "Play this queue";
-            this.radioButton2.UseVisualStyleBackColor = true;
-            // 
-            // cbURL
-            // 
-            this.cbURL.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.cbURL.FormattingEnabled = true;
-            this.cbURL.Location = new System.Drawing.Point(6, 63);
-            this.cbURL.Name = "cbURL";
-            this.cbURL.Size = new System.Drawing.Size(618, 21);
-            this.cbURL.TabIndex = 8;
             // 
             // btnStop
             // 

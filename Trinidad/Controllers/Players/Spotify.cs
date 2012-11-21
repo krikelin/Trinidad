@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using JariZ;
 using Trinidad.Controllers.Players;
-namespace Trinidad.Players
+namespace Trinidad.Controllers.Players
 {
     class Spotify : IPlayer
     {

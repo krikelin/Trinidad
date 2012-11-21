@@ -14,13 +14,30 @@ namespace Trinidad.Models
     [XmlRoot("program", Namespace="http://segurify.com/TR/2012/Channel")]
     public class Program
     {
-        [XmlElement("time")]
+        private const string DateTimeOffsetFormatString = "yyyy-MM-ddTHH:mm:sszzz";
         public DateTime Start;
+        [XmlElement("time")]
+        public String Time
+        {
+            get
+            {
+                return Start.ToString(DateTimeOffsetFormatString);
+            }
+            set
+            {
+                Start = DateTime.Parse(value);
+            }
+        }
         [XmlElement("duration")]
         public int Duration;
-        [XmlElement("channel")]
-        public Channel Channel;
-        public Program(DateTime start, int duration, Channel channel)
+        [XmlElement("url")]
+        public String Channel;
+        [XmlElement("title")]
+        public String Title;
+        public Program()
+        {
+        }
+        public Program(DateTime start, int duration, String channel)
         {
             this.Channel = channel;
             this.Duration = duration;

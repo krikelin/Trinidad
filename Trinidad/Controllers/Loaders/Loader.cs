@@ -9,6 +9,6 @@ namespace Trinidad.Controllers.Loaders
 {
     public interface ILoader
     {
-        Channel LoadChannel(String adress);
+        Configuration LoadConfiguration(String adress);
     }
 }

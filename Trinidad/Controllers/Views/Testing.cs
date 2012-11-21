@@ -34,7 +34,7 @@ namespace Trinidad
         {
           
           
-                Players.Add( new PlayerInstance("Spotify", new Players.Spotify()));
+                Players.Add( new PlayerInstance("Spotify", new Controllers.Players.Spotify()));
            
             comboBox1.DisplayMember = "Name";
             comboBox1.ValueMember = "Instance";
