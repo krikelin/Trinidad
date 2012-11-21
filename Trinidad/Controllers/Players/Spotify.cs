@@ -1,0 +1,43 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using JariZ;
+using Trinidad.Controllers.Players;
+namespace Trinidad.Players
+{
+    class Spotify : IPlayer
+    {
+        private JariZ.SpotifyAPI API = new SpotifyAPI(SpotifyAPI.GetOAuth(), "7194.spotilocal.com");
+        Responses.CFID cfid;
+        Responses.Status Current_Status;
+        public override string ToString()
+        {
+            return Name;
+        }
+        public String Name
+        {
+            get
+            {
+                return "Spotify";
+            }
+        }
+        public Spotify()
+        {
+            cfid = API.CFID;
+            Current_Status = API.Status;
+        }
+
+        public void Pause()
+        {
+            Current_Status = API.Pause; 
+           
+        }
+
+        public void Play()
+        {
+            Current_Status = API.Resume;
+        }
+    }
+}
