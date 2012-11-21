@@ -91,7 +91,7 @@ namespace Trinidad.Controllers.Views
       
         private void btnStart_Click(object sender, EventArgs e)
         {
-             Scrobble(DateTime.Parse(tbDateTime.Text));
+            timer1.Start();
             btnStop.Enabled = timer1.Enabled;
             btnStart.Enabled = !timer1.Enabled;
         }
@@ -140,6 +140,7 @@ namespace Trinidad.Controllers.Views
         }
         private void timer1_Tick(object sender, EventArgs e)
         {
+            Scrobble(DateTime.Now);
 
         }
 
