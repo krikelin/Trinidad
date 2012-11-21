@@ -47,8 +47,10 @@ namespace Trinidad.Controllers.Views
             }
             listView1.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
         }
+        WMPLib.WindowsMediaPlayerClass mplayer;
         private void Form1_Load(object sender, EventArgs e)
         {
+            mplayer = new WMPLib.WindowsMediaPlayerClass();
             tbDateTime.Text = DateTime.Now.ToString(DateTimeOffsetFormatString);
             LoadConfig();
            
@@ -89,7 +91,7 @@ namespace Trinidad.Controllers.Views
       
         private void btnStart_Click(object sender, EventArgs e)
         {
-            Scrobble(DateTime.Parse(tbDateTime.Text));
+             Scrobble(DateTime.Parse(tbDateTime.Text));
             btnStop.Enabled = timer1.Enabled;
             btnStart.Enabled = !timer1.Enabled;
         }
@@ -106,18 +108,22 @@ namespace Trinidad.Controllers.Views
                     if (Player != null)
                     {
                         Player.Pause();
-                        axWindowsMediaPlayer1.URL = cbURL.Text;
-                        axWindowsMediaPlayer1.Ctlcontrols.play();
+                        mplayer.URL = program.Channel;
+                        mplayer.MediaError += mplayer_MediaError;
+                        currentProgram = program;
+                        mplayer.play();
+                        //axWindowsMediaPlayer1.Ctlcontrols.play();
+                        return;   
                     }
                 }
                 // Check if program has ended, then resume the playback
                 if (currentProgram != null)
                 {
-                    TimeSpan minutesLeft = currentProgram.End.Subtract(DateTime.Now);
-                    if (minutesLeft.TotalMinutes <= 0)
+                    TimeSpan minutesLeft = currentProgram.End.Subtract(time);
+                    if (minutesLeft.TotalMinutes <= 1 && minutesLeft.TotalMinutes >= -1)
                     {
                         // Stop and go back
-                        axWindowsMediaPlayer1.Ctlcontrols.stop();
+                        mplayer.stop();
                         Player.Play();
                     }
                     
@@ -126,6 +132,11 @@ namespace Trinidad.Controllers.Views
             }
            
 
+        }
+
+        void mplayer_MediaError(object pMediaObject)
+        {
+            throw new NotImplementedException();
         }
         private void timer1_Tick(object sender, EventArgs e)
         {
@@ -137,6 +148,11 @@ namespace Trinidad.Controllers.Views
             timer1.Stop();
             btnStop.Enabled = timer1.Enabled;
             btnStart.Enabled = !timer1.Enabled;
+
+        }
+
+        private void axWindowsMediaPlayer1_Enter(object sender, EventArgs e)
+        {
 
         }
     }

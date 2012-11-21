@@ -39,7 +39,7 @@ namespace Trinidad.Models
                 return Start.AddMinutes(Duration);
             }
         }
-        [XmlElement("duration")]
+        [XmlAttribute("duration")]
         public int Duration;
         [XmlElement("url")]
         public String Channel;
