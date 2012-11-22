@@ -119,7 +119,7 @@ namespace Trinidad.Controllers.Application
         {
             if (Fade)
             {
-                mplayer.setVolume(0);
+                mplayer.Volume = (0);
                 
             }
             if (Player != null)

@@ -11,12 +11,41 @@ namespace Trinidad.Controllers.Players
     /// </summary>
     public interface IPlayer
     {
+        /// <summary>
+        /// Name
+        /// </summary>
         String Name
         {
             get;
         }
+
+        /// <summary>
+        /// Pause
+        /// </summary>
         void Pause();
+
+        /// <summary>
+        /// Play
+        /// </summary>
         void Play();
-        
+        /// <summary>
+        /// Fade in
+        /// </summary>
+        void FadeIn();
+
+        /// <summary>
+        /// Get set the volume
+        /// </summary>
+        int Volume { get; set; }
+
+        /// <summary>
+        /// Max Volume
+        /// </summary>
+        int MaxVolume { get; }
+
+        /// <summary>
+        /// Fade out
+        /// </summary>
+        void FadeOut();
     }
 }

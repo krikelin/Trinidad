@@ -10,7 +10,7 @@ namespace Trinidad.Controllers.Streamers
     {
         WMPLib.WindowsMediaPlayerClass mplayer = new WMPLib.WindowsMediaPlayerClass();
     
-        public string Name
+        public string Name  
         {
 	        get { throw new NotImplementedException(); }
         }
@@ -24,15 +24,22 @@ namespace Trinidad.Controllers.Streamers
         {
             mplayer.stop();
         }
-
+        
         public void Load(string URL)
         {
             this.url = URL;
         }
 
-        public void setVolume(int vol)
+        public int Volume
         {
-            mplayer.volume = vol;
+            get
+            {
+                return this.mplayer.volume;
+            }
+            set
+            {
+                this.mplayer.volume = value;
+            }
         }
         private String url;
         public string URL
@@ -45,6 +52,31 @@ namespace Trinidad.Controllers.Streamers
 	        {
                 this.url = value;
 	        }
+        }
+        private const int FPS = 10;
+        System.Timers.Timer fadeInTimer;
+        public void FadeIn()
+        {
+            fadeInTimer = new System.Timers.Timer(FPS);
+            fadeInTimer.Elapsed += fadeInTimer_Elapsed;
+        }
+        public int MaxVolume
+        {
+            get
+            {
+                return 100;
+            }
+        }
+        void fadeInTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
+        {
+            if(Volume < MaxVolume)
+            Volume += FPS;
+        }
+
+        public void FadeOut()
+        {
+            if (Volume > 0)
+                Volume -= FPS;
         }
     }
 }

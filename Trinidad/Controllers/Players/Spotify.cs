@@ -39,5 +39,33 @@ namespace Trinidad.Controllers.Players
         {
             Current_Status = API.Resume;
         }
+
+
+        public void FadeIn()
+        {
+            throw new NotImplementedException();
+        }
+
+        public int Volume
+        {
+            get
+            {
+                return 255;
+            }
+            set
+            {
+               
+            }
+        }
+
+        public int MaxVolume
+        {
+            get { return 255; }
+        }
+
+        public void FadeOut()
+        {
+            
+        }
     }
 }

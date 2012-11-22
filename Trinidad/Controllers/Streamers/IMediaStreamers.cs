@@ -28,14 +28,26 @@ namespace Trinidad.Controllers.Streamers
         /// </summary>
         /// <param name="URL"></param>
         void Load(String URL);
-        /// <summary>
-        /// Set volume
-        /// </summary>
-        /// <param name="vol"></param>
-        void setVolume(int vol);
+
+        int Volume { get; set; }
         /// <summary>
         /// URL
         /// </summary>
         String URL { get; set; }
+
+        /// <summary>
+        /// Fade in
+        /// </summary>
+        void FadeIn();
+
+        /// <summary>
+        /// Max Volume
+        /// </summary>
+        int MaxVolume { get; }
+
+        /// <summary>
+        /// Fade out
+        /// </summary>
+        void FadeOut();
     }
 }
