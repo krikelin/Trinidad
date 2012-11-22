@@ -17,7 +17,7 @@ namespace Trinidad.Models
         public String Channel;
         [XmlElement("name")]
         public String Name;
-        [XmlElement("duration")]
+        [XmlAttribute("duration")]
         public int Duration;
         [XmlElement("timing")]
         public Interval Timing;
