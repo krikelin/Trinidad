@@ -52,6 +52,7 @@
   <ItemGroup>
     <Compile Include="Controllers\Loaders\Loader.cs" />
     <Compile Include="Controllers\Loaders\XmlLoader.cs" />
+    <Compile Include="Models\Bulletin.cs" />
     <Compile Include="Models\Configuration.cs" />
     <Compile Include="Controllers\Views\Testing.cs">
       <SubType>Form</SubType>

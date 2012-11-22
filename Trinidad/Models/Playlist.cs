@@ -14,6 +14,9 @@ namespace Trinidad.Models
         [XmlArray("programs")]
         [XmlArrayItem("program")]
         public Program[] Programs;
+        [XmlArray("bulletins")]
+        [XmlArrayItem("bulletin")]
+        public Bulletin[] Bulletins;
         [XmlElement("name")]
         public String Name;
     }

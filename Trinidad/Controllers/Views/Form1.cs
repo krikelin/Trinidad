@@ -96,8 +96,35 @@ namespace Trinidad.Controllers.Views
             btnStart.Enabled = !timer1.Enabled;
         }
         Models.Program currentProgram = null;
+        private void PlayProgram(Models.Program program)
+        {
+            if (Player != null)
+            {
+                Player.Pause();
+                mplayer.URL = program.Channel;
+                mplayer.MediaError += mplayer_MediaError;
+                currentProgram = program;
+                mplayer.play();
+                //axWindowsMediaPlayer1.Ctlcontrols.play();
+                return;
+            }
+        }
         private void Scrobble(DateTime time)
         {
+            foreach (Models.Bulletin bulletin in currentPlaylist.Bulletins)
+            {
+                if(bulletin.Timing.Type == "hour") 
+                {
+                    if (time.Minute == bulletin.Timing.Number && time.Hour % bulletin.Timing.Range == 0)
+                    {
+                        Models.Program temporaryProgram = new Models.Program(DateTime.Now, bulletin.Duration, bulletin.Channel);
+                        currentProgram = temporaryProgram;
+                        PlayProgram(temporaryProgram);
+                        return;
+                    }
+                }
+
+            }
             foreach (Models.Program program in currentPlaylist.Programs)
             {
                 TimeSpan subtract = time.Subtract(program.Start);
@@ -105,16 +132,7 @@ namespace Trinidad.Controllers.Views
                 if (subtract.TotalSeconds <= 60 && subtract.TotalSeconds > 0)
                 {
 
-                    if (Player != null)
-                    {
-                        Player.Pause();
-                        mplayer.URL = program.Channel;
-                        mplayer.MediaError += mplayer_MediaError;
-                        currentProgram = program;
-                        mplayer.play();
-                        //axWindowsMediaPlayer1.Ctlcontrols.play();
-                        return;   
-                    }
+                    PlayProgram(program);
                 }
                 // Check if program has ended, then resume the playback
                 if (currentProgram != null)
@@ -123,8 +141,7 @@ namespace Trinidad.Controllers.Views
                     if (minutesLeft.TotalMinutes <= 1 && minutesLeft.TotalMinutes >= -1)
                     {
                         // Stop and go back
-                        mplayer.stop();
-                        Player.Play();
+                        StopProgram();
                     }
                     
                 }
@@ -132,6 +149,12 @@ namespace Trinidad.Controllers.Views
             }
            
 
+        }
+
+        private void StopProgram()
+        {
+            mplayer.stop();
+            Player.Play();
         }
 
         void mplayer_MediaError(object pMediaObject)
@@ -155,6 +178,11 @@ namespace Trinidad.Controllers.Views
         private void axWindowsMediaPlayer1_Enter(object sender, EventArgs e)
         {
 
+        }
+
+        private void btnInvoke_Click(object sender, EventArgs e)
+        {
+            Scrobble(DateTime.Parse(tbDateTime.Text));
         }
     }
 }

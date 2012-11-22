@@ -180,7 +180,7 @@
             this.btnInvoke.TabIndex = 4;
             this.btnInvoke.Text = "Invoke";
             this.btnInvoke.UseVisualStyleBackColor = true;
-            this.btnInvoke.Click += new System.EventHandler(this.btnStart_Click);
+            this.btnInvoke.Click += new System.EventHandler(this.btnInvoke_Click);
             // 
             // tbDateTime
             // 
