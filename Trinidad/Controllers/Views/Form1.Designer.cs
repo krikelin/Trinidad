@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
@@ -41,7 +40,6 @@
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.btnStop = new System.Windows.Forms.Button();
             this.btnStart = new System.Windows.Forms.Button();
-            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.btnInvoke = new System.Windows.Forms.Button();
             this.tbDateTime = new System.Windows.Forms.TextBox();
             this.cbDebug = new System.Windows.Forms.CheckBox();
@@ -83,6 +81,7 @@
             this.groupBox1.TabIndex = 3;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "groupBox1";
+            this.groupBox1.Enter += new System.EventHandler(this.groupBox1_Enter);
             // 
             // cbURL
             // 
@@ -168,11 +167,6 @@
             this.btnStart.UseVisualStyleBackColor = true;
             this.btnStart.Click += new System.EventHandler(this.btnStart_Click);
             // 
-            // timer1
-            // 
-            this.timer1.Interval = 60000;
-            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
-            // 
             // btnInvoke
             // 
             this.btnInvoke.Location = new System.Drawing.Point(510, 31);
@@ -199,6 +193,7 @@
             this.cbDebug.TabIndex = 6;
             this.cbDebug.Text = "Debug mode";
             this.cbDebug.UseVisualStyleBackColor = true;
+            this.cbDebug.CheckedChanged += new System.EventHandler(this.cbDebug_CheckedChanged);
             // 
             // Form1
             // 
@@ -234,7 +229,6 @@
         private System.Windows.Forms.ListView listView1;
         private System.Windows.Forms.Button btnStop;
         private System.Windows.Forms.Button btnStart;
-        private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.Button btnInvoke;
         private System.Windows.Forms.ColumnHeader columnHeader1;
         private System.Windows.Forms.ColumnHeader Time;

@@ -15,30 +15,17 @@ namespace Trinidad.Controllers.Views
     public partial class Form1 : Form
     {
         private const string DateTimeOffsetFormatString = "yyyy-MM-ddTHH:mm:sszzz";
-        public IPlayer Player;
+
         public Form1()
         {
             InitializeComponent();
         }
-        public class PlayerInstance
+        public Controllers.Application.Scrobbler Scrobbler;
+        public void LoadConfig() 
         {
-            public String Name;
-            public IPlayer Instance;
-            public PlayerInstance(String name, IPlayer instance)
-            {
-                this.Instance = instance;
-                this.Name = name;
-            }
-        }
-        private Configuration config;
-        private List<PlayerInstance> Players = new List<PlayerInstance>();
-        Controllers.Loaders.XmlLoader xmlLoader = new Controllers.Loaders.XmlLoader();
-        private Playlist currentPlaylist;
-        private void LoadConfig()
-        {
-            config = xmlLoader.LoadConfiguration("config.xml");
-            currentPlaylist  = config.Playlists[0];
-            foreach (Models.Program program in currentPlaylist.Programs)
+        
+            
+            foreach (Models.Program program in Scrobbler.currentPlaylist.Programs)
             {
 
                 var item = listView1.Items.Add(program.Title);
@@ -47,19 +34,20 @@ namespace Trinidad.Controllers.Views
             }
             listView1.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
         }
-        WMPLib.WindowsMediaPlayerClass mplayer;
+       
         private void Form1_Load(object sender, EventArgs e)
         {
-            mplayer = new WMPLib.WindowsMediaPlayerClass();
-            tbDateTime.Text = DateTime.Now.ToString(DateTimeOffsetFormatString);
+            Scrobbler = new Application.Scrobbler("config.xml");
+            tbDateTime.Text = Scrobbler.DebugTime.ToString(DateTimeOffsetFormatString);
             LoadConfig();
            
           
-                Players.Add( new PlayerInstance("Spotify", new Controllers.Players.Spotify()));
+                
            
             comboBox1.DisplayMember = "Name";
             comboBox1.ValueMember = "Instance";
-            comboBox1.DataSource = Players;
+            comboBox1.DataSource = Scrobbler.Players;
+            Scrobbler.mplayer = new Streamers.WindowsMediaPlayer();
             
             
         }
@@ -74,7 +62,7 @@ namespace Trinidad.Controllers.Views
         {
             try
             {
-                this.Player = ((PlayerInstance)comboBox1.SelectedItem).Instance;
+                Scrobbler.Player = ((Trinidad.Controllers.Application.Scrobbler.PlayerInstance)comboBox1.SelectedItem).Instance;
             }
             catch (Exception ex)
             {
@@ -91,102 +79,25 @@ namespace Trinidad.Controllers.Views
       
         private void btnStart_Click(object sender, EventArgs e)
         {
-            timer1.Start();
-            btnStop.Enabled = timer1.Enabled;
-            btnStart.Enabled = !timer1.Enabled;
+            Scrobbler.Start();
+            btnStop.Enabled = Scrobbler.Enabled;
+            btnStart.Enabled = !Scrobbler.Enabled;
         }
         Models.Program currentProgram = null;
-        private void PlayProgram(Models.Program program)
-        {
-            if (Player != null)
-            {
-                Player.Pause();
-                mplayer.URL = program.Channel;
-                mplayer.MediaError += mplayer_MediaError;
-                currentProgram = program;
-                mplayer.play();
-                //axWindowsMediaPlayer1.Ctlcontrols.play();
-                return;
-            }
-        }
-        private void Scrobble(DateTime time)
-        {
+        
 
-            foreach (Models.Program program in currentPlaylist.Programs)
-            {
-                TimeSpan subtract = time.Subtract(program.Start);
-
-                if (subtract.TotalSeconds <= 60 && subtract.TotalSeconds > 0)
-                {
-
-                    PlayProgram(program);
-                    return;
-                }
-                // Check if program has ended, then resume the playback
-                if (currentProgram != null)
-                {
-                    TimeSpan minutesLeft = currentProgram.End.Subtract(time);
-                    if (minutesLeft.TotalMinutes <= 1 && minutesLeft.TotalMinutes >= -1)
-                    {
-                        // Stop and go back
-                        StopProgram();
-                    }
-
-                }
-
-            }
-            foreach (Models.Bulletin bulletin in currentPlaylist.Bulletins)
-            {
-                if(bulletin.Timing.Type == "hour") 
-                {
-                    if (time.Minute == bulletin.Timing.Number && time.Hour % bulletin.Timing.Range == 0)
-                    {
-                        Models.Program temporaryProgram = new Models.Program(time, bulletin.Duration, bulletin.Channel);
-                        currentProgram = temporaryProgram;
-                        PlayProgram(temporaryProgram);
-                        return;
-                    }
-                }
-
-            }
-            
-           
-
-        }
-
-        private void StopProgram()
-        {
-            mplayer.stop();
-            Player.Play();
-        }
+        
 
         void mplayer_MediaError(object pMediaObject)
         {
         }
-        private void timer1_Tick(object sender, EventArgs e)
-        {
-            if (cbDebug.Checked)
-            {
-                try
-                {
-                    Scrobble(DateTime.Parse(tbDateTime.Text));
-                }
-                catch (Exception ex)
-                {
-                }
-            }
-            else
-            {
-                Scrobble(DateTime.Now);
-            }
-
-        }
+        
 
         private void btnStop_Click(object sender, EventArgs e)
         {
-            timer1.Stop();
-            btnStop.Enabled = timer1.Enabled;
-            btnStart.Enabled = !timer1.Enabled;
+
+            btnStop.Enabled = Scrobbler.Enabled;
+            btnStart.Enabled = !Scrobbler.Enabled;
 
         }
 
@@ -197,7 +108,18 @@ namespace Trinidad.Controllers.Views
 
         private void btnInvoke_Click(object sender, EventArgs e)
         {
-            timer1_Tick(sender, e);
+            Scrobbler.DebugTime = DateTime.Parse(tbDateTime.Text);
+            Scrobbler.Go(this);
+        }
+
+        private void groupBox1_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void cbDebug_CheckedChanged(object sender, EventArgs e)
+        {
+            Scrobbler.Debug = cbDebug.Checked;
         }
     }
 }
