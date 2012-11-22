@@ -44,6 +44,7 @@
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.btnInvoke = new System.Windows.Forms.Button();
             this.tbDateTime = new System.Windows.Forms.TextBox();
+            this.cbDebug = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -189,11 +190,22 @@
             this.tbDateTime.Size = new System.Drawing.Size(100, 20);
             this.tbDateTime.TabIndex = 5;
             // 
+            // cbDebug
+            // 
+            this.cbDebug.AutoSize = true;
+            this.cbDebug.Location = new System.Drawing.Point(510, 4);
+            this.cbDebug.Name = "cbDebug";
+            this.cbDebug.Size = new System.Drawing.Size(87, 17);
+            this.cbDebug.TabIndex = 6;
+            this.cbDebug.Text = "Debug mode";
+            this.cbDebug.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1173, 421);
+            this.Controls.Add(this.cbDebug);
             this.Controls.Add(this.tbDateTime);
             this.Controls.Add(this.btnInvoke);
             this.Controls.Add(this.btnStart);
@@ -228,6 +240,7 @@
         private System.Windows.Forms.ColumnHeader Time;
         private System.Windows.Forms.ColumnHeader columnHeader2;
         private System.Windows.Forms.TextBox tbDateTime;
+        private System.Windows.Forms.CheckBox cbDebug;
     }
 }
 

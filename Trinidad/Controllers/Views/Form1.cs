@@ -111,20 +111,7 @@ namespace Trinidad.Controllers.Views
         }
         private void Scrobble(DateTime time)
         {
-            foreach (Models.Bulletin bulletin in currentPlaylist.Bulletins)
-            {
-                if(bulletin.Timing.Type == "hour") 
-                {
-                    if (time.Minute == bulletin.Timing.Number && time.Hour % bulletin.Timing.Range == 0)
-                    {
-                        Models.Program temporaryProgram = new Models.Program(DateTime.Now, bulletin.Duration, bulletin.Channel);
-                        currentProgram = temporaryProgram;
-                        PlayProgram(temporaryProgram);
-                        return;
-                    }
-                }
 
-            }
             foreach (Models.Program program in currentPlaylist.Programs)
             {
                 TimeSpan subtract = time.Subtract(program.Start);
@@ -133,6 +120,7 @@ namespace Trinidad.Controllers.Views
                 {
 
                     PlayProgram(program);
+                    return;
                 }
                 // Check if program has ended, then resume the playback
                 if (currentProgram != null)
@@ -143,10 +131,25 @@ namespace Trinidad.Controllers.Views
                         // Stop and go back
                         StopProgram();
                     }
-                    
+
                 }
-                
+
             }
+            foreach (Models.Bulletin bulletin in currentPlaylist.Bulletins)
+            {
+                if(bulletin.Timing.Type == "hour") 
+                {
+                    if (time.Minute == bulletin.Timing.Number && time.Hour % bulletin.Timing.Range == 0)
+                    {
+                        Models.Program temporaryProgram = new Models.Program(time, bulletin.Duration, bulletin.Channel);
+                        currentProgram = temporaryProgram;
+                        PlayProgram(temporaryProgram);
+                        return;
+                    }
+                }
+
+            }
+            
            
 
         }
@@ -159,11 +162,23 @@ namespace Trinidad.Controllers.Views
 
         void mplayer_MediaError(object pMediaObject)
         {
-            throw new NotImplementedException();
         }
         private void timer1_Tick(object sender, EventArgs e)
         {
-            Scrobble(DateTime.Now);
+            if (cbDebug.Checked)
+            {
+                try
+                {
+                    Scrobble(DateTime.Parse(tbDateTime.Text));
+                }
+                catch (Exception ex)
+                {
+                }
+            }
+            else
+            {
+                Scrobble(DateTime.Now);
+            }
 
         }
 
@@ -182,7 +197,7 @@ namespace Trinidad.Controllers.Views
 
         private void btnInvoke_Click(object sender, EventArgs e)
         {
-            Scrobble(DateTime.Parse(tbDateTime.Text));
+            timer1_Tick(sender, e);
         }
     }
 }
