@@ -20,7 +20,7 @@ namespace Trinidad.Controllers.Loaders
         {
             try
             {
-                XmlSerializer serializer = new XmlSerializer(typeof(Models.Configuration));
+                XmlSerializer serializer = new XmlSerializer(typeof(Models. Configuration));
                 Stream inputStream = null;
                 if (adress.StartsWith("http:"))
                 {

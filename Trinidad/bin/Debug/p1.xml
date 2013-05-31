@@ -11,11 +11,11 @@
 				</bulletin>
 			</bulletins>
 			<programs>
-			<!--
+		
 				<program duration="55">
 					<url><![CDATA[file:///D:/Planboken-2012-11-07.mp3]]></url>
 					<title><![CDATA[PlÃ¥nboken]]></title>
-					<time><![CDATA[2012-11-22 11:05]]></time>
+					<time><![CDATA[11:05]]></time>
 				</program>
 				<program duration="55">
 					<url><![CDATA[file:///D:/Planboken-2012-11-21.mp3]]></url>
@@ -27,7 +27,7 @@
 					<title><![CDATA[SR P3 Dokumentär]]></title>
 					<time><![CDATA[2012-11-22 14:20]]></time>
 				</program>	
-			-->
+		
 			</programs>
 		</playlist>
 		
