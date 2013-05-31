@@ -11,6 +11,7 @@ namespace Trinidad.Models
     [XmlRoot("Channel", Namespace="http://segurify.com/TR/2012/Channel")]
     public class Playlist
     {
+        
         [XmlArray("programs")]
         [XmlArrayItem("program")]
         public Program[] Programs;

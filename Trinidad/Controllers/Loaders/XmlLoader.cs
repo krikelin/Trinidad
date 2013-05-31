@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
@@ -20,7 +21,17 @@ namespace Trinidad.Controllers.Loaders
             try
             {
                 XmlSerializer serializer = new XmlSerializer(typeof(Models.Configuration));
-                Configuration configuration = (Configuration)serializer.Deserialize(new XmlTextReader(new FileStream(adress, FileMode.Open)));
+                Stream inputStream = null;
+                if (adress.StartsWith("http:"))
+                {
+                    WebClient wc = new WebClient();
+                    inputStream = new MemoryStream(wc.DownloadData(adress));
+                }
+                else
+                {
+                    inputStream = new FileStream(adress, FileMode.Open);
+                }
+                Configuration configuration = (Configuration)serializer.Deserialize(new XmlTextReader(inputStream));
                 return configuration;
             }
             catch (Exception e)

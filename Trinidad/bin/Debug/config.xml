@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<configuration xmlns="http://segurify.com/TR/2012/Channel">
+	<playlists>
+		<playlist recurring="true">
+			<title><![CDATA[Sveriges Radio]]></title>
+			<bulletins>
+				<bulletin duration="4">
+					<url><![CDATA[http://sverigesradio.se/topsy/direkt/164-mp3-http.m3u]]></url>
+					<name>Ekonyheter</name>
+					<timing type="hour" range="1" number="59" />
+				</bulletin>
+			</bulletins>
+			<programs>
+			<!--
+				<program duration="55">
+					<url><![CDATA[file:///D:/Planboken-2012-11-07.mp3]]></url>
+					<title><![CDATA[Plånboken]]></title>
+					<time><![CDATA[2012-11-22 11:05]]></time>
+				</program>
+				<program duration="55">
+					<url><![CDATA[file:///D:/Planboken-2012-11-21.mp3]]></url>
+					<title><![CDATA[Plånboken]]></title>
+					<time><![CDATA[2012-11-22 13:00]]></time>
+				</program>
+				<program duration="120">
+					<url><![CDATA[D:\Users\drsou_000\Downloads\SR_p3_dokumentar_121104_05da90.mp3]]></url>
+					<title><![CDATA[SR P3 Dokument�r]]></title>
+					<time><![CDATA[2012-11-22 14:20]]></time>
+				</program>	
+			-->
+			</programs>
+		</playlist>
+		
+	</playlists>
+</configuration>

@@ -55,6 +55,12 @@
     <Compile Include="Controllers\Loaders\XmlLoader.cs" />
     <Compile Include="Controllers\Streamers\IMediaStreamers.cs" />
     <Compile Include="Controllers\Streamers\WindowsMediaPlayer.cs" />
+    <Compile Include="Controllers\Views\MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Controllers\Views\MainForm.Designer.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\Bulletin.cs" />
     <Compile Include="Models\Configuration.cs" />
     <Compile Include="Controllers\Views\Testing.cs">
@@ -73,8 +79,12 @@
     <Compile Include="Models\Playlist.cs" />
     <Compile Include="Models\Program.cs" />
     <Compile Include="Controllers\Players\Spotify.cs" />
+    <Compile Include="Models\RSS.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Controllers\Views\MainForm.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controllers\Views\Testing.resx">
       <DependentUpon>Testing.cs</DependentUpon>
     </EmbeddedResource>

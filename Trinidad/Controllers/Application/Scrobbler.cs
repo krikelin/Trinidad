@@ -21,7 +21,7 @@ namespace Trinidad.Controllers.Application
             this.Players.Add(new PlayerInstance("Spotify", new Controllers.Players.Spotify()));
             this.Streamers.Add(new Streamers.WindowsMediaPlayer());
             
-            Timer = new System.Timers.Timer();
+            Timer = new System.Timers.Timer(60000);
             Timer.Elapsed += Timer_Elapsed;
             LoadConfiguration(fileName);
         }
@@ -142,14 +142,16 @@ namespace Trinidad.Controllers.Application
             mplayer.Stop();
             Player.Play();
         }
-
+        public Dictionary<String, String> Feeds = new Dictionary<string, string>();
         /// <summary>
         /// Scrobble
         /// </summary>
         /// <param name="time"></param>
         public void Scrobble(DateTime time)
         {
-
+            foreach (KeyValuePair<String, String> feed in Feeds)
+            {
+            }
             foreach (Models.Program program in currentPlaylist.Programs)
             {
                 TimeSpan subtract = time.Subtract(program.Start);
@@ -160,24 +162,26 @@ namespace Trinidad.Controllers.Application
                     PlayProgram(program);
                     return;
                 }
-                // Check if program has ended, then resume the playback
-                if (currentProgram != null)
-                {
-                    TimeSpan minutesLeft = currentProgram.End.Subtract(time);
-                    if (minutesLeft.TotalMinutes <= 1 && minutesLeft.TotalMinutes >= -1)
-                    {
-                        // Stop and go back
-                        StopProgram();
-                    }
+                
 
+            }
+            // Check if program has ended, then resume the playback
+            if (currentProgram != null)
+            {
+                TimeSpan minutesLeft = currentProgram.End.Subtract(time);
+                if (minutesLeft.TotalMinutes <= 1 && minutesLeft.TotalMinutes >= -1)
+                {
+                    // Stop and go back
+                    StopProgram();
                 }
 
             }
+
             foreach (Models.Bulletin bulletin in currentPlaylist.Bulletins)
             {
                 if (bulletin.Timing.Type == "hour")
                 {
-                    if (time.Minute == bulletin.Timing.Number && time.Hour % bulletin.Timing.Range == 0)
+                    if (time.Minute == bulletin.Timing.Number && (time.Hour % bulletin.Timing.Range) == 0)
                     {
                         Models.Program temporaryProgram = new Models.Program(time, bulletin.Duration, bulletin.Channel);
                         currentProgram = temporaryProgram;
