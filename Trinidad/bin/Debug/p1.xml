@@ -9,11 +9,10 @@
 					<name>Ekonyheter</name>
 					<timing type="hour" range="1" number="59" />
 				</bulletin>
-				
 			</bulletins>
 			<programs>
-				<program duration="55"><!--
-
+			<!--
+				<program duration="55">
 					<url><![CDATA[file:///D:/Planboken-2012-11-07.mp3]]></url>
 					<title><![CDATA[Plånboken]]></title>
 					<time><![CDATA[2012-11-22 11:05]]></time>
